@@ -11,7 +11,7 @@ export default function Drag(props: DragProps) {
 
   return (
     <>
-      <Draggable draggableId={l.title} index={index} key={l.id}>
+      <Draggable draggableId={l.title} key={l.id}>
         {(provided) => {
           return (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>

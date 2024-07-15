@@ -7,40 +7,51 @@ import Drop3 from "./Drops3";
 export type Todos = {
   id: string;
   title: string;
-  completed: boolean;
+  completed: string;
 };
 
 const todos: Todos[] = [
-  { id: "1", title: "공부", completed: false },
-  { id: "2", title: "헬스", completed: false },
-  { id: "3", title: "독서", completed: false },
-  { id: "4", title: "산책", completed: false },
-  { id: "5", title: "요리", completed: true },
+  { id: "1", title: "공부", completed: "todo" },
+  { id: "2", title: "헬스", completed: "todo" },
+  { id: "3", title: "독서", completed: "inProgress" },
+  { id: "4", title: "산책", completed: "inProgress" },
+  { id: "5", title: "요리", completed: "done" },
 ];
 
 export default function TodoList() {
   const [list, setList] = useState<Todos[]>(todos);
 
   const onDragEnd = (result: DropResult) => {
-    console.log(result.destination?.droppableId);
-    if (result.destination?.droppableId === "TODO2") {
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    console.log(result);
+    if (destination?.droppableId === "TODO1") {
       console.log(result);
       const findItem = result.draggableId;
       const cloneData: Todos[] = JSON.parse(JSON.stringify(list));
       const newData = cloneData.map((data) => {
         if (data.title === findItem) {
-          const filteredData = { ...data, completed: true };
+          const filteredData = { ...data, completed: "todo" };
           return filteredData;
         } else return data;
       });
-      console.log();
       setList(newData);
-    } else if (result.destination?.droppableId === "TODO1") {
+    } else if (destination?.droppableId === "TODO2") {
       const findItem = result.draggableId;
       const cloneData: Todos[] = JSON.parse(JSON.stringify(list));
       const newData = cloneData.map((data) => {
         if (data.title === findItem) {
-          const filteredData = { ...data, completed: false };
+          const filteredData = { ...data, completed: "inProgress" };
+          return filteredData;
+        } else return data;
+      });
+      setList(newData);
+    } else if (destination?.droppableId === "TODO3") {
+      const findItem = result.draggableId;
+      const cloneData: Todos[] = JSON.parse(JSON.stringify(list));
+      const newData = cloneData.map((data) => {
+        if (data.title === findItem) {
+          const filteredData = { ...data, completed: "done" };
           return filteredData;
         } else return data;
       });

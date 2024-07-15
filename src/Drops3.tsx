@@ -8,7 +8,6 @@ type Drop3Props = {
 
 export default function Drop3(props: Drop3Props) {
   const { list } = props;
-  console.log(list);
   return (
     <div style={{ marginRight: "30px" }}>
       <Droppable droppableId="TODO3" type="TODO">
@@ -16,7 +15,7 @@ export default function Drop3(props: Drop3Props) {
           <div ref={provided.innerRef} {...provided.droppableProps} style={{ width: "300px", height: "700px", background: snapshot.isDraggingOver ? "lightblue" : "lightgrey", textAlign: "center" }}>
             <h2>DONE</h2>
             {list.map((l, i) => {
-              return l.completed ? <Drag l={l} index={i} key={l.id} /> : null;
+              return l.completed === "done" ? <Drag l={l} index={i} key={l.id} /> : null;
             })}
             {provided.placeholder}
           </div>
