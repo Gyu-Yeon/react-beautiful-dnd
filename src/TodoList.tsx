@@ -22,11 +22,9 @@ export default function TodoList() {
   const [list, setList] = useState<Todos[]>(todos);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { destination } = result;
     if (!destination) return;
-    console.log(result);
     if (destination?.droppableId === "TODO1") {
-      console.log(result);
       const findItem = result.draggableId;
       const cloneData: Todos[] = JSON.parse(JSON.stringify(list));
       const newData = cloneData.map((data) => {
