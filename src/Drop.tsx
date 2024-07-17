@@ -1,26 +1,37 @@
 import Drag from "./Drag";
 import { Droppable } from "react-beautiful-dnd";
-import { Todos } from "./TodoList";
+import { DroppableFields, Todo } from "./TodoList";
 
 type DropProps = {
-  list: Todos[];
+  todos: Todo[];
 };
 
+const droppableField: DroppableFields[] = [
+  { fieldName: "todo", droppableId: "todo" },
+  { fieldName: "inProgress", droppableId: "inProgress" },
+  { fieldName: "done", droppableId: "done" },
+];
+
 export default function Drop(props: DropProps) {
-  const { list } = props;
+  const { todos } = props;
+
   return (
-    <div style={{ marginRight: "30px" }}>
-      <Droppable droppableId="TODO1" type="TODO">
-        {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.droppableProps} style={{ width: "300px", height: "700px", background: snapshot.isDraggingOver ? "lightblue" : "lightgrey", textAlign: "center" }}>
-            <h2>TODO LIST</h2>
-            {list.map((l, i) => {
-              return l.completed === "todo" ? <Drag l={l} index={i} key={l.id} /> : null;
-            })}
-            {provided.placeholder}
+    <div style={{ display: "flex" }}>
+      {droppableField.map((field) => {
+        return (
+          <div style={{ marginRight: "30px" }}>
+            <Droppable droppableId={field.droppableId} type="TODO" key={field.droppableId}>
+              {(provided, snapshot) => (
+                <div ref={provided.innerRef} {...provided.droppableProps} style={{ width: "300px", height: "700px", background: snapshot.isDraggingOver ? "lightblue" : "lightgrey", textAlign: "center" }}>
+                  <h2>{field.fieldName}</h2>
+                  <Drag todos={todos} field={field} />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
           </div>
-        )}
-      </Droppable>
+        );
+      })}
     </div>
   );
 }
