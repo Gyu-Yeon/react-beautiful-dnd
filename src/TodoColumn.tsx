@@ -10,18 +10,7 @@ const TodoColumn: React.FC<TodoColumnProps> = ({ field, todos }) => (
   <div style={{ marginRight: "30px" }}>
     <Droppable droppableId={field.droppableId} type="TODO">
       {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          style={{
-            width: "300px",
-            height: "700px",
-            background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
-            textAlign: "center",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
+        <div ref={provided.innerRef} {...provided.droppableProps} style={{ width: "300px", height: "700px", background: snapshot.isDraggingOver ? "lightblue" : "lightgrey", textAlign: "center", padding: "10px", borderRadius: "5px" }}>
           <h2>{field.fieldName}</h2>
           {todos
             .filter((todo) => todo.status === field.droppableId)
